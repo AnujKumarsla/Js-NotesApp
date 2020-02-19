@@ -1,4 +1,4 @@
- console.log("hello world!")
+console.log("hello world!")
 
 {   // cards load on loading page
  let saveNote=localStorage.getItem('notes');
@@ -12,13 +12,21 @@ function addNote(){
     let saveNote=localStorage.getItem('notes');
     let notes= ( saveNote==null  ) ? [] : ( JSON.parse(saveNote) ) ;
     let text=document.getElementById('textArea');
+    let title=document.getElementById('AddTitle');
+
+
+    let myObj={
+        text:text.value,
+        title: title.value
+    }
     // console.log(newNote);
     // add the new note into "notes" array
-    notes.push(text.value);
+    notes.push(myObj);
     // update the notes array in the local storage
     localStorage.setItem('notes',JSON.stringify(notes));
     // Clear the textArea
     text.value=null;
+    title.value=null;
     updateCards(notes); 
 };
 
@@ -29,8 +37,8 @@ function updateCards(notes){
             html+=`
         <div class="card noteCard m-2" style="width: 18rem;">
             <div class="card-body">
-              <h5 class="card-title">Note ${index+1}</h5>
-              <p class="card-text">${element}</p>
+              <h5 class="card-title">${index+1}.${element.title} </h5>
+              <p class="card-text">${element.text}</p>
               <button id="${index}" onclick="deleteNote(this.id)" class="btn btn-primary">Delete Note</button>
             </div>
           </div>`;
